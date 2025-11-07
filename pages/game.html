@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Game Level</title>
+        <link rel="stylesheet" href="../css/index.css" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1 class="title">Level 1</h1>
+                <div class="level-info">
+                    <span>Moves: 0</span>
+                    <span id="levelTime">Time: 00:00</span>
+                </div>
+            </div>
+
+            <div class="game-area">
+                <div class="grid-container">
+                    <div class="grid" id="gameGrid"></div>
+                </div>
+
+                <div class="toolbar" id="toolbar">
+                    <div class="tool" data-direction="up" draggable="true">
+                        ↑
+                    </div>
+                    <div class="tool" data-direction="down" draggable="true">
+                        ↓
+                    </div>
+                    <div class="tool" data-direction="left" draggable="true">
+                        ←
+                    </div>
+                    <div class="tool" data-direction="right" draggable="true">
+                        →
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button class="btn primary-btn" id="resetBtn">
+                        Reset Level
+                    </button>
+                    <button class="btn secondary-btn" id="backBtn">
+                        Back to Menu
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script src="../scripts/items/base.js"></script>
+        <script src="../scripts/items/cell.js"></script>
+        <script src="../scripts/items/actor.js"></script>
+        <script src="../scripts/items/mountain.js"></script>
+        <script src="../scripts/items/indicator.js"></script>
+
+        <script src="../scripts/board.js"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const grid = document.getElementById("gameGrid");
+                const resetBtn = document.getElementById("resetBtn");
+                const backBtn = document.getElementById("backBtn");
+                const levelTime = document.getElementById("levelTime");
+
+                const board = new Board(grid);
+
+                board.subscribe(EVENT.time, ({ data }) => {
+                    const min = Math.floor(data / 60)
+                        .toString()
+                        .padStart(2, "0");
+
+                    const sec = (data % 60).toString().padStart(2, "0");
+
+                    levelTime.textContent = `Time: ${min}:${sec}`;
+                });
+
+                const item = board.createItem(0, 1, Mountain);
+
+                setInterval(() => {
+                    const x = item.pos.x < 7 ? item.pos.x + 1 : 0;
+                    const y = item.pos.y < 7 ? item.pos.y + 1 : 0;
+
+                    board.moveItem(x, y, item);
+                }, 1000);
+
+                board.startTimer();
+
+                // board.add(1, 3, CLASS.mountain);
+
+                // setTimeout(() => {
+                //     board.cleanCell(1, 3);
+                // }, 2000);
+
+                // board.createActor(2, 2);
+                // board.createMountain(5, 5);
+
+                const tools = document.querySelectorAll(".tool");
+                const cells = document.querySelectorAll(".cell");
+
+                tools.forEach((tool) => {
+                    tool.addEventListener("dragstart", function (e) {
+                        e.dataTransfer.setData(
+                            "text/plain",
+                            this.dataset.direction,
+                        );
+                        this.classList.add("dragging");
+                    });
+
+                    tool.addEventListener("dragend", function () {
+                        this.classList.remove("dragging");
+                    });
+                });
+
+                resetBtn.addEventListener("click", () => {
+                    board.reset();
+                });
+
+                backBtn.addEventListener("click", () => {
+                    window.location.href = "../index.html";
+                });
+            });
+        </script>
+    </body>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .title {
+            font-size: 2.5em;
+            color: var(--color-function);
+            margin: 0;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(122, 162, 247, 0.3);
+        }
+
+        .level-info {
+            display: flex;
+            gap: 20px;
+            font-size: 1.2em;
+            text-shadow: 0 0 10px rgba(122, 162, 247, 0.3);
+        }
+
+        .level-info span {
+            padding: 8px 16px;
+            background-color: var(--bg-tertiary);
+            border-radius: 6px;
+            color: var(--fg-secondary);
+        }
+
+        .game-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            gap: 30px;
+        }
+
+        .grid-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            gap: 2px;
+            width: 500px;
+            height: 500px;
+            background-color: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .cell {
+            background-color: var(--bg-tertiary);
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .cell:hover {
+            background-color: var(--cursor-line);
+            transform: scale(1.05);
+        }
+
+        .start {
+            background-color: var(--color-success);
+        }
+
+        .finish {
+            background-color: var(--color-error);
+        }
+
+        .mountain {
+            position: relative;
+        }
+
+        .mountain::after {
+            content: "⛰︎";
+            font-size: 2rem;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background-color: var(--bg-float);
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .tool {
+            width: 60px;
+            height: 60px;
+            background-color: var(--bg-tertiary);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+            cursor: grab;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .tool:hover {
+            background-color: var(--cursor-line);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .tool.dragging {
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+
+        .cell.drag-over {
+            background-color: var(--selection-bg);
+            border: 2px dashed var(--color-function);
+        }
+
+        .indicator {
+            width: 100%;
+            font-size: 1.5em;
+            color: var(--color-function);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .primary-btn {
+            background-color: var(--color-success);
+            color: var(--bg-primary);
+        }
+
+        .primary-btn:hover {
+            background-color: var(--color-string);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(158, 206, 106, 0.3);
+        }
+
+        .secondary-btn {
+            background-color: var(--color-function);
+            color: var(--bg-primary);
+        }
+
+        .secondary-btn:hover {
+            background-color: var(--color-type);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(125, 207, 255, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .grid {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .toolbar {
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+
+        .controls {
+            animation: fadeIn 0.8s ease-out 0.4s both;
+        }
+    </style>
+</html>

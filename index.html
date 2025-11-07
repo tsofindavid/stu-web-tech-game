@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Game Welcome</title>
+        <link rel="stylesheet" href="css/index.css" />
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="title">Game Title</h1>
+            <p class="description">
+                Welcome to our amazing adventure game! Explore mysterious
+                worlds, solve challenging puzzles, and embark on an
+                unforgettable journey.
+            </p>
+            <div class="input-container">
+                <input
+                    id="nameInput"
+                    type="text"
+                    class="name-input"
+                    placeholder="Enter your name"
+                />
+            </div>
+            <button id="startBtn" class="start-btn">Start Game</button>
+            <button id="scoreBtn" class="secondary-btn">score</button>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                document
+                    .getElementById("startBtn")
+                    .addEventListener("click", () => {
+                        const name = document
+                            .getElementById("nameInput")
+                            .value?.trim();
+
+                        if (!name) {
+                            alert(
+                                `Bro, we cant continue without your name. Just do it!`,
+                            );
+                            nameInput.focus();
+                            return;
+                        }
+
+                        window.location.href = "pages/game.html";
+                    });
+
+                document
+                    .getElementById("scoreBtn")
+                    .addEventListener("click", () => {
+                        window.location.href = "pages/score.html";
+                    });
+            });
+        </script>
+        <style>
+            .container {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .title {
+                font-size: 4em;
+                margin-bottom: 20px;
+                color: var(--color-function);
+                text-shadow: 0 0 10px rgba(122, 162, 247, 0.3);
+            }
+
+            .description {
+                font-size: 1.2em;
+                max-width: 600px;
+                margin-bottom: 30px;
+                color: var(--fg-secondary);
+                line-height: 1.6;
+            }
+
+            .input-container {
+                margin: 30px 0;
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .name-input {
+                width: 100%;
+                padding: 12px 16px;
+                background-color: var(--bg-tertiary);
+                border: 2px solid var(--border-color);
+                border-radius: 8px;
+                color: var(--fg-primary);
+                font-size: 1.1em;
+                transition: all 0.3s ease;
+            }
+
+            .name-input:focus {
+                outline: none;
+                border-color: var(--color-function);
+                box-shadow: 0 0 0 3px rgba(122, 162, 247, 0.2);
+            }
+
+            .start-btn {
+                background-color: var(--color-success);
+                color: var(--bg-primary);
+                border: none;
+                border-radius: 8px;
+                padding: 14px 40px;
+                font-size: 1.2em;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin-top: 20px;
+            }
+
+            .start-btn:hover {
+                background-color: var(--color-string);
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(158, 206, 106, 0.3);
+            }
+
+            .start-btn:active {
+                transform: translateY(0);
+            }
+
+            .secondary-btn {
+                background-color: var(--color-function);
+                color: var(--bg-tertiary);
+                border: none;
+                border-radius: 8px;
+                padding: 14px 40px;
+                font-size: 1.2em;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin-top: 10px;
+            }
+
+            .secondary-btn:hover {
+                background-color: var(--color-string);
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(158, 206, 106, 0.3);
+            }
+
+            .secondary-btn:active {
+                transform: translateY(0);
+            }
+
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .title {
+                animation: fadeInUp 0.8s ease-out;
+            }
+
+            .description {
+                animation: fadeInUp 0.8s ease-out 0.2s both;
+            }
+
+            .input-container {
+                animation: fadeInUp 0.8s ease-out 0.4s both;
+            }
+
+            .start-btn {
+                animation: fadeInUp 0.8s ease-out 0.6s both;
+            }
+
+            .scondary-btn {
+                animation: fadeInUp 0.8s ease-out 0.6s both;
+            }
+        </style>
+    </body>
+</html>
