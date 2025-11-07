@@ -15,7 +15,7 @@
 As storage must be used localStorage in browser.
 ```javascript
 class Score{
-get() // get from storage
-add() // add to storage
-reset() // clean storage
+static get() // get from storage
+static add() // add to storage
+static reset() // clean storage
 }```
