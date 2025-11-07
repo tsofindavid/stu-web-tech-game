@@ -18,4 +18,5 @@ class Score{
 static get() // get from storage
 static add() // add to storage
 static reset() // clean storage
-}```
+}
+```
