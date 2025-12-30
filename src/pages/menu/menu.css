@@ -1,0 +1,249 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	text-align: center;
+	padding: 20px;
+}
+
+.title {
+	font-size: 4em;
+	margin-bottom: 20px;
+	color: var(--color-function);
+	text-shadow: 0 0 10px rgba(122, 162, 247, 0.3);
+	animation: fadeInUp 0.8s ease-out;
+}
+
+.description {
+	font-size: 1.2em;
+	max-width: 600px;
+	margin-bottom: 30px;
+	color: var(--fg-secondary);
+	line-height: 1.6;
+	animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.input-container {
+	margin: 30px 0;
+	width: 100%;
+	max-width: 400px;
+	animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.name-input {
+	width: 100%;
+	padding: 12px 16px;
+	background-color: var(--bg-tertiary);
+	border: 2px solid var(--border-color);
+	border-radius: 8px;
+	color: var(--fg-primary);
+	font-size: 1.1em;
+	transition: all 0.3s ease;
+	box-sizing: border-box;
+}
+
+.name-input:focus {
+	outline: none;
+	border-color: var(--color-function);
+	box-shadow: 0 0 0 3px rgba(122, 162, 247, 0.2);
+}
+
+.start-btn,
+.secondary-btn {
+	border: none;
+	border-radius: 8px;
+	padding: 14px 40px;
+	font-size: 1.2em;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	margin-top: 20px;
+	animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+.start-btn {
+	background-color: var(--color-success);
+	color: var(--bg-primary);
+}
+
+.secondary-btn {
+	background-color: var(--color-function);
+	color: var(--bg-tertiary);
+	margin-top: 10px;
+}
+
+.start-btn:hover {
+	background-color: var(--color-string);
+	transform: translateY(-2px);
+	box-shadow: 0 5px 15px rgba(158, 206, 106, 0.3);
+}
+
+.secondary-btn:hover {
+	background-color: var(--color-type);
+	transform: translateY(-2px);
+	box-shadow: 0 5px 15px rgba(125, 207, 255, 0.3);
+}
+
+.start-btn:active,
+.secondary-btn:active {
+	transform: translateY(0);
+}
+
+dialog {
+	background: var(--bg-tertiary);
+	color: var(--fg-secondary);
+	border: 2px solid var(--color-function);
+	border-radius: 12px;
+	padding: 30px;
+	max-width: 400px;
+	width: 90%;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+	animation: fadeInUp 0.4s ease-out;
+}
+
+dialog::backdrop {
+	background: rgba(0, 0, 0, 0.7);
+	backdrop-filter: blur(4px);
+}
+
+dialog h2 {
+	color: var(--color-function);
+	margin-top: 0;
+	font-size: 1.8em;
+}
+
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@media (max-width: 575.98px) {
+	dialog {
+		padding: 20px;
+	}
+	dialog h2 {
+		font-size: 1.5em;
+	}
+}
+
+@media (max-width: 575.98px) {
+	.container {
+		padding: 15px;
+		min-height: 100vh;
+	}
+
+	.title {
+		font-size: 2em;
+		margin-bottom: 15px;
+	}
+
+	.description {
+		font-size: 1em;
+		margin-bottom: 20px;
+	}
+
+	.input-container {
+		margin: 20px 0;
+	}
+
+	.name-input {
+		padding: 10px 14px;
+		font-size: 1em;
+	}
+
+	.start-btn {
+		padding: 12px 40px;
+		font-size: 1em;
+	}
+
+	.secondary-btn {
+		padding: 12px 20px;
+		font-size: 1em;
+		margin-top: 8px;
+	}
+
+	.start-btn:hover,
+	.secondary-btn:hover {
+		transform: none;
+	}
+
+	.start-btn:active {
+		background-color: var(--color-string);
+	}
+
+	.secondary-btn:active {
+		background-color: var(--color-type);
+	}
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+	.container {
+		padding: 15px;
+	}
+
+	.title {
+		font-size: 2.8em;
+		margin-bottom: 18px;
+	}
+
+	.description {
+		font-size: 1.05em;
+		margin-bottom: 25px;
+	}
+
+	.input-container {
+		max-width: 380px;
+	}
+
+	.start-btn,
+	.secondary-btn {
+		padding: 13px 35px;
+		font-size: 1.1em;
+	}
+}
+
+@media (min-width: 768px) {
+	.container {
+		padding: 20px;
+	}
+
+	.title {
+		font-size: 3.5em;
+	}
+
+	.description {
+		font-size: 1.15em;
+	}
+}
+
+@media (min-width: 992px) {
+	.title {
+		font-size: 4em;
+	}
+
+	.input-container {
+		max-width: 450px;
+	}
+}
+
+@media (hover: none) and (pointer: coarse) {
+	.start-btn:hover,
+	.secondary-btn:hover {
+		transform: none;
+	}
+
+	.start-btn:active {
+		background-color: var(--color-string);
+	}
+
+	.secondary-btn:active {
+		background-color: var(--color-type);
+	}
+}
