@@ -132,9 +132,26 @@ export function GamePage() {
             score.set(data);
         });
 
-        const levels = generateLevels(30);
-        game.setLevels(levels);
-        game.start(levels);
+        fetch("levels.json")
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Failed to download levels");
+                }
+                return response.json();
+            })
+            .then((levels) => {
+                game.setLevels(levels);
+                game.start(levels);
+            })
+            .catch((error) => {
+                console.error("Failed to download levels.json:", error);
+                
+                const levelCount = 30;
+                const levels = generateLevels(levelCount);
+                
+                game.setLevels(levels);
+                game.start(levels);
+            });
 
         const endEvent = board.eventSubscribe(EVENT.end, () => {
             const r = store.get("game");
