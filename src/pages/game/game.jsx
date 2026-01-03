@@ -6,6 +6,7 @@ import { store } from "@/services/store.js";
 import { navigate } from "../../core/router.js";
 import { Board, EVENT } from "./classes/board.js";
 import { Game } from "./classes/game.js";
+import { generateLevels } from "@/services/levelGenerator.js";
 import styles from "./game.css?inline";
 
 const level = useState(0);
@@ -131,12 +132,9 @@ export function GamePage() {
             score.set(data);
         });
 
-        fetch("levels.json")
-            .then((d) => d.json())
-            .then((l) => {
-                game.setLevels(l);
-                game.start(l);
-            });
+        const levels = generateLevels(30);
+        game.setLevels(levels);
+        game.start(levels);
 
         const endEvent = board.eventSubscribe(EVENT.end, () => {
             const r = store.get("game");
