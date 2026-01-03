@@ -133,19 +133,11 @@ export function GamePage() {
         });
 
         fetch("levels.json")
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Failed to download levels");
-                }
-                return response.json();
-            })
-            .then((levels) => {
-                game.setLevels(levels);
-                game.start(levels);
-            })
+            .then((response) => response.json())
             .catch((error) => {
-                console.error("Failed to download levels.json:", error);
-                
+                console.error("Failed to load levels.json:", error);
+            })
+            .finally(() => {
                 const levelCount = 30;
                 const levels = generateLevels(levelCount);
                 

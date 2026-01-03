@@ -20,41 +20,30 @@ export function MenuPage() {
 			return;
 		}
 
-		fetch("/api/generate-levels", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		})
-			.catch((error) => {
-				console.error("Nepodarilo sa vygenerovat levely:", error);
-			})
-			.finally(() => {
-				let gameData = store.get("game");
-				if (gameData) {
-					const newGame = {
-						date: Date.now(),
-						name: name,
-						score: 0,
-						level: 0,
-					};
-					gameData.push(newGame);
-				} else {
-					gameData = [
-						{
-							date: Date.now(),
-							name: name,
-							score: 0,
-							level: 0,
-						},
-					];
-				}
+		let gameData = store.get("game");
+		if (gameData) {
+			const newGame = {
+				date: Date.now(),
+				name: name,
+				score: 0,
+				level: 0,
+			};
+			gameData.push(newGame);
+		} else {
+			gameData = [
+				{
+					date: Date.now(),
+					name: name,
+					score: 0,
+					level: 0,
+				},
+			];
+		}
 
-				store.set("game", gameData);
-				store.save();
+		store.set("game", gameData);
+		store.save();
 
-				navigate("game");
-			});
+		navigate("game");
 	};
 
 	return (
