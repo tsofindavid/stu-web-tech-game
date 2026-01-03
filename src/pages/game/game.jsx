@@ -6,6 +6,7 @@ import { store } from "@/services/store.js";
 import { navigate } from "../../core/router.js";
 import { Board, EVENT } from "./classes/board.js";
 import { Game } from "./classes/game.js";
+import { generateLevels } from "@/services/levelGenerator.js";
 import styles from "./game.css?inline";
 
 const level = useState(0);
@@ -132,32 +133,16 @@ export function GamePage() {
         });
 
         fetch("levels.json")
-            .then((d) => d.json())
+            .then((response) => response.json())
             .catch((error) => {
                 console.error("Failed to load levels.json:", error);
             })
-            .then(() => {
-                return fetch("lvlCount.json");
-            })
-            .then((d) => d.json())
-            .then((config) => {
-                const levelCount = config.levelCount || 30;
-                
-                import("@/services/levelGenerator.js").then((module) => {
-                    const levels = module.generateLevels(levelCount);
-                    game.setLevels(levels);
-                    game.start(levels);
-                });
-            })
-            .catch((error) => {
-                console.error("Failed to load lvlCount.json:", error);
+            .finally(() => {
                 const levelCount = 30;
+                const levels = generateLevels(levelCount);
                 
-                import("@/services/levelGenerator.js").then((module) => {
-                    const levels = module.generateLevels(levelCount);
-                    game.setLevels(levels);
-                    game.start(levels);
-                });
+                game.setLevels(levels);
+                game.start(levels);
             });
 
         const endEvent = board.eventSubscribe(EVENT.end, () => {
