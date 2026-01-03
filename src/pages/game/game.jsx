@@ -132,15 +132,22 @@ export function GamePage() {
             score.set(data);
         });
 
+        let levelCount = 30;
+        
         fetch("levels.json")
-            .then((response) => response.json())
+            .then((d) => d.json())
+            .then(() => {
+                return fetch("lvlCount.json");
+            })
+            .then((d) => d.json())
+            .then((config) => {
+                levelCount = config.levelCount;
+            })
             .catch((error) => {
-                console.error("Failed to load levels.json:", error);
+                console.error("Failed to load config:", error);
             })
             .finally(() => {
-                const levelCount = 30;
                 const levels = generateLevels(levelCount);
-                
                 game.setLevels(levels);
                 game.start(levels);
             });
