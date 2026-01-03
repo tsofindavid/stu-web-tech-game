@@ -42,8 +42,10 @@ export class Board {
 		}
 
 		for (const el of cell.elem.querySelectorAll("div")) {
-			if (el.classList.contains("Indicator") || el.tagName === "DIV") {
+			if (el.classList.contains(Indicator.name)) {
 				el.remove();
+			} else {
+				return;
 			}
 		}
 

@@ -1,7 +1,0 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M16 2L26 12V20L16 30L6 20V12L16 2Z" fill="#1a1b26" stroke="#7aa2f7" stroke-width="2"/>
-  <circle cx="16" cy="16" r="4" fill="#9ece6a">
-    <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite" />
-  </circle>
-  <path d="M10 10L6 6M22 10L26 6M10 22L6 26M22 22L26 26" stroke="#7aa2f7" stroke-width="2" stroke-linecap="round"/>
-</svg>
