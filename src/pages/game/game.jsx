@@ -6,6 +6,7 @@ import { store } from "@/services/store.js";
 import { navigate } from "../../core/router.js";
 import { Board, EVENT } from "./classes/board.js";
 import { Game } from "./classes/game.js";
+import { generateLevels } from "@/services/levelGenerator.js";
 import styles from "./game.css?inline";
 
 const level = useState(0);
@@ -131,11 +132,24 @@ export function GamePage() {
             score.set(data);
         });
 
+        let levelCount = 30;
+        
         fetch("levels.json")
             .then((d) => d.json())
-            .then((l) => {
-                game.setLevels(l);
-                game.start(l);
+            .then(() => {
+                return fetch("lvlCount.json");
+            })
+            .then((d) => d.json())
+            .then((config) => {
+                levelCount = config.levelCount;
+            })
+            .catch((error) => {
+                console.error("Failed to load config:", error);
+            })
+            .finally(() => {
+                const levels = generateLevels(levelCount);
+                game.setLevels(levels);
+                game.start(levels);
             });
 
         const endEvent = board.eventSubscribe(EVENT.end, () => {
