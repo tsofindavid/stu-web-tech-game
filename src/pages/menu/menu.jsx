@@ -20,14 +20,27 @@ export function MenuPage() {
 			return;
 		}
 
-		let r = store.get("game");
-		if (r) {
-			r.push({ date: Date.now(), name, score: 0, level: 0 });
+		let gameData = store.get("game");
+		if (gameData) {
+			const newGame = {
+				date: Date.now(),
+				name: name,
+				score: 0,
+				level: 0,
+			};
+			gameData.push(newGame);
 		} else {
-			r = [{ date: Date.now(), name, score: 0, level: 0 }];
+			gameData = [
+				{
+					date: Date.now(),
+					name: name,
+					score: 0,
+					level: 0,
+				},
+			];
 		}
 
-		store.set("game", r);
+		store.set("game", gameData);
 		store.save();
 
 		navigate("game");
