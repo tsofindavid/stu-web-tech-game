@@ -1,4 +1,6 @@
-const DIRECTIONS = ["up", "down", "left", "right"];
+import { DIRECTION } from "@/pages/game/classes/items/indicator.item.js";
+
+const DIRECTIONS = Object.values(DIRECTION);
 
 // Generate random integer between min and max (inclusive)
 function getRandomInt(min, max) {
